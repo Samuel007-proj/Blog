@@ -1,0 +1,13 @@
+GET http://localhost:3003/api/blogs/
+###
+GET http://localhost:3003/api/blogs/62d6d0effbe3ab18ea347a63
+###
+POST http://localhost:3003/api/blogs/   HTTP/1.1
+content-Type: application/json
+
+{
+    "title": "A blog to test express-node",
+    "author": "Samuel Damilare",
+    "url": "sheltered-reaches-66422.herokuapp.com/",
+    "likes": 100000
+}
