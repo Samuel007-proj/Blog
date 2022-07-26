@@ -1,13 +1,26 @@
 GET http://localhost:3003/api/blogs/
 ###
-GET http://localhost:3003/api/blogs/62d6d0effbe3ab18ea347a63
+GET http://localhost:3003/api/blogs/62d6d11469f50dc4673278e1
 ###
 POST http://localhost:3003/api/blogs/   HTTP/1.1
 content-Type: application/json
 
 {
-    "title": "A blog to test express-node",
-    "author": "Samuel Damilare",
-    "url": "sheltered-reaches-66422.herokuapp.com/",
-    "likes": 100000
+    "id": "5a422aa71b54a676234d17f8",
+    "title": "Go To Statement Considered Harmful",
+    "author": "Edsger W. Dijkstra",
+    "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    "likes": "5"
 }
+####
+PUT http://localhost:3003/api/blogs/62dc0f2907c463f42e5e1d3b
+content-Type: application/json
+
+{
+    "title": "Go To Statement Considered Harmful",
+    "author": "Edsger W. Dijkstra",
+    "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+    "likes": "22"
+}
+###
+DELETE http://localhost:3003/api/blogs/62dc15c62f4cbd25acc04ee3 HTTP/1.1
