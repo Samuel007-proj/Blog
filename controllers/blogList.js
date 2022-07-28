@@ -1,79 +1,63 @@
 const bloglistRouter = require('express').Router();
+const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const {info} = require('../utils/logger')
+const midware = require('../utils/midware')
 
 bloglistRouter.get('/api/blogs', async (req, resp) => {
-    let blogs = await Blog.find({})
+    let blogs = await Blog.find({}).populate('user', {name: 1, username: 1})
     resp.json(blogs)
 })
 
 bloglistRouter.get('/api/blogs/:id', async (req,resp) => {
     let id = req.params.id
     info(id)
-    let blog = await Blog.findById(id)
+    let blog = await Blog.findById(id).populate('user', {name: 1, username: 1})
     resp.json(blog)
 })
 
 bloglistRouter.post('/api/blogs', async (req, resp) => {
     let body = req.body
+    const decodedToken = req.decodedToken
+
+    if(!decodedToken.id){
+        return resp.status(401).json({error: 'token missing or invalid'})
+    }
+
+    let user = await User.findById(decodedToken.id)
 
     let blog = new Blog({
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: Number(body.likes)
+        likes: Number(body.likes),
+        user: user._id
     })
 
-    let result = await blog.save()
-    resp.json(result)
+    let savedBlog = await blog.save()
+    user.blogs.push(savedBlog._id)
+    await user.save()
 
-    const blogs = [
-        {
-          title: "React patterns",
-          author: "Michael Chan",
-          url: "https://reactpatterns.com/",
-          likes: 7
-        },
-        {
-          title: "Go To Statement Considered Harmful",
-          author: "Edsger W. Dijkstra",
-          url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-          likes: 5
-        },
-        {
-          title: "Canonical string reduction",
-          author: "Edsger W. Dijkstra",
-          url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
-          likes: 12
-        },
-        {
-          title: "First class tests",
-          author: "Robert C. Martin",
-          url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
-          likes: 10
-        },
-        {
-          title: "TDD harms architecture",
-          author: "Robert C. Martin",
-          url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-          likes: 0
-        },
-        {
-          title: "Type wars",
-          author: "Robert C. Martin",
-          url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-          likes: 2
-        }  
-      ]
-    await Blog.insertMany(blogs)
+    resp.status(201).json(savedBlog)
+
 
 })
 
-bloglistRouter.delete('/api/blogs/:id', async (req,resp) => {
-    let id = req.params.id
-    await Blog.findByIdAndRemove(id)
-    info('done')
-    resp.status(204).json('done')
+bloglistRouter.delete('/api/blogs/:id', midware.userExtractor, async (req,resp) => {
+    let blogId = req.params.id
+
+    let userId = req.decodedToken.id
+
+    const blog = await Blog.findById(blogId)
+    const isBlogAuthor = blog.user.toString() === userId.toString()
+
+    if(!isBlogAuthor){
+        return resp.status(401).json({error: `${req.user} did not create this note`})
+    }
+
+    await Blog.findByIdAndRemove(blogId)
+    resp.status(204).send(`${req.user} deleted this note ${blogId}`)
 })
 
 bloglistRouter.put('/api/blogs/:id', async (req,resp) => {
