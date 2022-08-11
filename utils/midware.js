@@ -5,7 +5,7 @@ const reqLogger = (req, resp, next) => {
     info('METHOD: ', req.method )
     info('PATH: ', req.path )
     info('BODY: ', req.body )
-    info('_________________' )
+    info('_____________________________' )
     next()
 }
 

@@ -1,5 +1,4 @@
 const bloglistRouter = require('express').Router();
-const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const {info} = require('../utils/logger')
@@ -46,18 +45,17 @@ bloglistRouter.post('/api/blogs', async (req, resp) => {
 
 bloglistRouter.delete('/api/blogs/:id', midware.userExtractor, async (req,resp) => {
     let blogId = req.params.id
-
     let userId = req.decodedToken.id
 
     const blog = await Blog.findById(blogId)
-    const isBlogAuthor = blog.user.toString() === userId.toString()
+    const isBlogAuthor = blog.user?.toString() === userId.toString()
 
     if(!isBlogAuthor){
         return resp.status(401).json({error: `${req.user} did not create this note`})
     }
 
     await Blog.findByIdAndRemove(blogId)
-    resp.status(204).send(`${req.user} deleted this note ${blogId}`)
+    resp.status(204).send(`${req.username} deleted this note ${blogId}`)
 })
 
 bloglistRouter.put('/api/blogs/:id', async (req,resp) => {

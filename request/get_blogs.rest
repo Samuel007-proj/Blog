@@ -1,10 +1,14 @@
 GET http://localhost:3003/api/blogs/
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjYwMjIyNzMzLCJleHAiOjE2NjAyMjYzMzN9.W9qxMBOQ0Q2UdeVDsDx8taghyXbsYJ4qYu5XoDGLEIU
+###
+GET http://localhost:3003/api/blogs/62e125bbb094c30122d5843c
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
-GET http://localhost:3003/api/blogs/62dc15c72f4cbd25acc04ee9
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
+
+###
 POST http://localhost:3003/api/blogs/   HTTP/1.1
 content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTUyMjIwLCJleHAiOjE2NTg5NTQwMjB9.Rqx8X4WlrX1SnL2zMBJIAK_vtVK5SequqyvKlo3S5VQ
+
 {
     "id": "5a422aa71b54a676234d17f8",
     "title": "Go To Statement Considered Harmful",
@@ -24,7 +28,8 @@ content-Type: application/json
     "likes": "22"
 }
 ###
-DELETE http://localhost:3003/api/blogs/62e0fafec92fc3908122db17 HTTP/1.1
+DELETE http://localhost:3003/api/blogs/62eac4b4acbd7a1c746dabe6 HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbWlsYXJlIiwiaWQiOiI2MmUxMjYwZmIwOTRjMzAxMjJkNTg0NDAiLCJpYXQiOjE2NTk4OTk4NDUsImV4cCI6MTY1OTkwMzQ0NX0.laF84QE9j7bTtnIU5Ex9IN6dWVLx-2dBJ4xF7kXNGw0
 ####
 POST http://localhost:3003/api/users
 content-Type: application/json
@@ -36,7 +41,6 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhb
 }
 ###
 GET http://localhost:3003/api/users/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
 ###
 POST http://localhost:3003/login
 content-Type: application/json
@@ -46,3 +50,5 @@ content-Type: application/json
     "name": "sammy",
     "password": "123456"
 }
+###
+GET http://localhost:3003/api/user/62e0faabc92fc3908122db14
