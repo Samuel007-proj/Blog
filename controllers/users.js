@@ -33,7 +33,6 @@ usersRouter.post('/api/users', async (req, resp) => {
 usersRouter.get('/api/user/:username', async (req, resp) => {
     const username = req.params.username
     const user =  await User.findOne({username: username})
-    console.log(await user, 0)
     const userId = await user._id
 
     const blogs = await Blog.find({user: userId})
@@ -55,15 +54,49 @@ usersRouter.get('/api/user/:username', async (req, resp) => {
 
     const mostLikedBlog = await Blog.find({ likes: mostBlogLikes })
 
-    const mostLikedBlogTitle = await mostLikedBlog[0].title
-
     if(user){
         const blogsLength = blogs.length
-
-        resp.json({blogsLength, totalLikes, mostLikedBlogTitle})
+        if(blogsLength){
+            const mostLikedBlogTitle = await mostLikedBlog[0].title
+            resp.json({blogsLength, totalLikes, mostLikedBlogTitle})
+        } else {
+            
+            return resp.json({nostats: 'currently, no blogs availble'})
+            
+        }
 
     }else{
         resp.status(204).json({error: "incorrect user id"})
+    }
+
+})
+
+usersRouter.put('/api/user/:username', async (req, resp) => {
+    const username = req.params.username
+
+    const user = await User.findOne({ username: username })
+
+    if(user){
+
+        const name  = await user.name
+        const userReq = req.body
+
+        if(name === userReq.name){
+            const password = await bcrypt.hash(userReq.password, 10)
+
+            let newObj = {
+                name,
+                username,
+                passwordHash: password
+            }
+
+            const newUserObj = await User.findOneAndUpdate({name, username}, newObj, { new: true, runValidators: true, context: 'query'})
+            return resp.status(200).json(newUserObj)
+        } else { 
+            return resp.status(401).json({error: "invalid user's name"})
+        }
+    } else {
+        return resp.status(401).json({error: "invalid username"})
     }
 
 })

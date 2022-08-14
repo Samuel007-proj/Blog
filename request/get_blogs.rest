@@ -1,5 +1,5 @@
 GET http://localhost:3003/api/blogs/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjYwMjIyNzMzLCJleHAiOjE2NjAyMjYzMzN9.W9qxMBOQ0Q2UdeVDsDx8taghyXbsYJ4qYu5XoDGLEIU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNveWVsYW1pIiwiaWQiOiI2MmY2MDNlNDFhNzY2MjA5ZWI3ZjMzMWUiLCJpYXQiOjE2NjAyOTcyOTcsImV4cCI6MTY2MDMwMDg5N30.h4EeXNr1br2HDgeK9rKVDkV4xI-9cKgC-9zSufgiyEU
 ###
 GET http://localhost:3003/api/blogs/62e125bbb094c30122d5843c
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
@@ -46,9 +46,9 @@ POST http://localhost:3003/login
 content-Type: application/json
 
 {
-    "username": "samuel",
-    "name": "sammy",
+    "username": "soyelami",
+    "name": "oyelami",
     "password": "123456"
 }
 ###
-GET http://localhost:3003/api/user/62e0faabc92fc3908122db14
+GET http://localhost:3003/api/user/soyelami

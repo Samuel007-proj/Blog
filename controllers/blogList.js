@@ -6,7 +6,13 @@ const midware = require('../utils/midware')
 
 bloglistRouter.get('/api/blogs', async (req, resp) => {
     let blogs = await Blog.find({}).populate('user', {name: 1, username: 1})
-    resp.json(blogs)
+
+    blogs.length
+    ? 
+        resp.json(blogs)
+    :
+        resp.json({noblogs: 'No blogs yet, create some blog'})
+    
 })
 
 bloglistRouter.get('/api/blogs/:id', async (req,resp) => {
