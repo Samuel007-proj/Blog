@@ -52,3 +52,12 @@ content-Type: application/json
 }
 ###
 GET http://localhost:3003/api/user/soyelami
+###
+PUT http://localhost:3003/api/user/samuel
+content-Type: application/json
+
+{
+    "username": "soyelami",
+    "name": "oyelami",
+    "password": "123456"
+}

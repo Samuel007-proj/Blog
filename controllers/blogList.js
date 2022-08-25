@@ -67,14 +67,22 @@ bloglistRouter.delete('/api/blogs/:id', midware.userExtractor, async (req,resp) 
 bloglistRouter.put('/api/blogs/:id', async (req,resp) => {
     let id = req.params.id
     let body = req.body
-    let blog = {
-        title: body.title,
-        author: body.author,
-        url: body.url,
-        likes: Number(body.likes)
+    
+    const updateString = body.item
+
+    const refBlog = await Blog.findById(id)
+    const updateItem = refBlog[updateString]
+    console.log(updateString)
+    if(updateString === 'likes') {
+        body = {likes: refBlog.likes+1}
     }
-    let updatedBlog = await Blog.findByIdAndUpdate(id, blog)
-    resp.json(updatedBlog)
+
+    try{
+        let updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true })
+        resp.json(updatedBlog)
+    } catch(err){
+        resp.status(400).json(err)
+    }
 })
 
 module.exports = bloglistRouter
