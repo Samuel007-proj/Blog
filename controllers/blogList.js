@@ -71,7 +71,7 @@ bloglistRouter.put('/api/blogs/:id', async (req,resp) => {
     const updateString = body.item
 
     const refBlog = await Blog.findById(id)
-    const updateItem = refBlog[updateString]
+
     console.log(updateString)
     if(updateString === 'likes') {
         body = {likes: refBlog.likes+1}

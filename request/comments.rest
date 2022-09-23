@@ -1,0 +1,20 @@
+GET http://localhost:3003/api/comments/
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNveWVsYW1pIiwiaWQiOiI2MmY2MDNlNDFhNzY2MjA5ZWI3ZjMzMWUiLCJpYXQiOjE2NjM5NTY2NzcsImV4cCI6MTY2Mzk2MDI3N30.SLtpVxozatjr_vyGcGYqRPgP7HwCzCLQ3vFj7QELsr8
+###
+POST http://localhost:3003/api/comments
+content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNveWVsYW1pIiwiaWQiOiI2MmY2MDNlNDFhNzY2MjA5ZWI3ZjMzMWUiLCJpYXQiOjE2NjM5NTY2NzcsImV4cCI6MTY2Mzk2MDI3N30.SLtpVxozatjr_vyGcGYqRPgP7HwCzCLQ3vFj7QELsr8
+
+{
+    "comment": "the second comment on the Comment db",
+    "ref_blog_id": "62d6d1e428f91ba59ae852f8"
+}
+###
+POST http://localhost:3003/login
+content-Type: application/json
+
+{
+    "comment": "soyelami",
+    "name": "oyelami",
+    "password": "123456"
+}

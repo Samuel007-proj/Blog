@@ -6,6 +6,36 @@ const { info, error } = require('../utils/logger')
 
 usersRouter.get('/api/users', async (req, resp) => {
     const users = await User.find({}).populate('blogs', { title: 1, url: 1 })
+
+    const getBlogs = async(id) => {
+        const items = await Blog.find({ user: id })
+        return await items
+    }
+
+    const update_user = async (user_id, ids) => {
+        const items = await User.findByIdAndUpdate(user_id, {blogs: ids}, {new: true})
+        return await items
+    }
+    
+    users.forEach( user => {
+        info(user.username)
+
+        const user_id = user.id
+
+        const user_blogs =  getBlogs(user._id)
+        
+        user_blogs
+        .then( user_blogs => { 
+                const item = user_blogs.map(b => b.id); 
+                console.log(item.length)
+                return item
+        }).then(relevant_id => {
+                    update_user(user_id, relevant_id)
+                        .then(item => console.log(item.blogs, 'done'))
+            })
+        
+    } )
+
     resp.jsonp(users)
 })
 
