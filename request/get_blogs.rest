@@ -1,5 +1,5 @@
 GET http://localhost:3003/api/blogs/
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNveWVsYW1pIiwiaWQiOiI2MmY2MDNlNDFhNzY2MjA5ZWI3ZjMzMWUiLCJpYXQiOjE2NjM5NTY2NzcsImV4cCI6MTY2Mzk2MDI3N30.SLtpVxozatjr_vyGcGYqRPgP7HwCzCLQ3vFj7QELsr8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjY0OTEyNzk0LCJleHAiOjE2NjQ5MTYzOTR9.CG-5Vew-suAL06bL1qVHhxV9uAGIFR5i3fahaV8nBlk
 ###
 GET http://localhost:3003/api/blogs/62e125bbb094c30122d5843c
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjU4OTQ1NTEzLCJleHAiOjE2NTg5NDczMTN9.FvLxOcTBpaKeRf87xREZk73cQgSGywATThf1xDMxdys
@@ -16,6 +16,14 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhb
     "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
     "likes": "5",
     "userId": "62e0faabc92fc3908122db14"
+}
+###
+POST http://localhost:3003/api/blogs/search   HTTP/1.1
+content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbXVlbCIsImlkIjoiNjJlMGZhYWJjOTJmYzM5MDgxMjJkYjE0IiwiaWF0IjoxNjY0OTEyNzk0LCJleHAiOjE2NjQ5MTYzOTR9.CG-5Vew-suAL06bL1qVHhxV9uAGIFR5i3fahaV8nBlk
+
+{
+    "search": "react"
 }
 ####
 PUT http://localhost:3003/api/blogs/62dc0f2907c463f42e5e1d3b
@@ -43,7 +51,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhb
 GET http://localhost:3003/api/users/
 ###
 POST http://localhost:3003/login
-content-Type: application/json
+content-Type: application/js
 
 {
     "username": "soyelami",

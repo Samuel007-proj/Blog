@@ -15,6 +15,20 @@ bloglistRouter.get('/api/blogs', async (req, resp) => {
     
 })
 
+bloglistRouter.post('/api/blogs/search', async (req, resp) => {
+    const { search } = req.body
+    const search_regExp = new RegExp(search, 'gi')
+    console.log( await search_regExp)
+    let blogs = await Blog.find({ title: search_regExp }).populate('user', {name: 1, username: 1})
+    console.log(blogs)
+    blogs.length
+    ? 
+        resp.json(blogs)
+    :
+        resp.status(400).json({noblogs: 'No matching blog ref title'})
+    
+})
+
 bloglistRouter.get('/api/blogs/:id', async (req,resp) => {
     let id = req.params.id
     info(id)
