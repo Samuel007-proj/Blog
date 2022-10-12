@@ -2,9 +2,9 @@ const { info, error } = require('./logger')
 const jwt = require('jsonwebtoken')
 
 const reqLogger = (req, resp, next) => {
-    info('METHOD: ', req.method )
-    info('PATH: ', req.path )
-    info('BODY: ', req.body )
+    info('METHOD:', req.method )
+    info('PATH:', req.path )
+    info('BODY:', req.body )
     info('_____________________________' )
     next()
 }

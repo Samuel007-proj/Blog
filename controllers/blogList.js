@@ -99,4 +99,15 @@ bloglistRouter.put('/api/blogs/:id', async (req,resp) => {
     }
 })
 
+bloglistRouter.get('/api/user/blog_refs', async (req, resp)=>{
+    const id = req.decodedToken.id
+    console.log(id)
+    try{
+        const user_blog_refs = await Blog.find({user: id})
+        resp.json(user_blog_refs)
+    }catch(err){
+        resp.json({error: err.message})
+    }
+})
+
 module.exports = bloglistRouter

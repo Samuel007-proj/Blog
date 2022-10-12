@@ -2,6 +2,7 @@ const usersRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const Blog = require('../utils/exporter.js')
+const Comment = require('../models/comments')
 const { info, error } = require('../utils/logger')
 
 usersRouter.get('/api/users', async (req, resp) => {
@@ -60,45 +61,35 @@ usersRouter.post('/api/users', async (req, resp) => {
     resp.status(201).json(savedUser)
 })
 
-usersRouter.get('/api/user/:username', async (req, resp) => {
-    const username = req.params.username
+usersRouter.get('/api/user/profile', async (req, resp) => {
+    const username = req.decodedToken.username
     const user =  await User.findOne({username: username})
-    
-    
+
     if(user){
-        const userId = await user._id
+        const userId = user._id
+        const total_refs = await Blog.countDocuments({user: `${userId}`})
+        const likes = await Blog.aggregate([
+            {$group: {_id: {user: userId}, total_likes: {$sum: '$likes'}}},
+            {$project: {_id: 0, total_likes:1}}
+        ])
+        console.log(likes, 1)
 
-        const blogs = await Blog.find({user: userId})
-
-        const blogsLength = blogs.length
-        if(blogsLength){
-            const getLikes = async blogs => {
-                let likes = []
-                await blogs.forEach( blog => {
-                     likes.push(blog.likes)
-                } )
-                return likes
-            }
-        
-            const likesArray = await getLikes(blogs)
-            const totalLikes = likesArray.reduce((sum, prev) => {
-                return sum + prev
-            }, 0 )
-        
-            const mostBlogLikes = Math.max(...likesArray)
-        
-            const mostLikedBlog = await Blog.find({ likes: mostBlogLikes })
-        
-            const mostLikedBlogTitle = await mostLikedBlog[0].title
-            resp.json({blogsLength, totalLikes, mostLikedBlogTitle})
-        } else {
-            
-            return resp.json({nostats: 'currently, no blogs availble'})
-            
-        }
-
+        const liked_ref = await Blog.aggregate([
+            {$match: {user: userId}},
+            {$sort: {likes: -1}},
+            {$limit: 1},
+            {$project: {title: 1, author: 1, url: 1, likes: 1, user: 1}}
+        ])
+        console.log(liked_ref, 3)
+            /*
+                total_refs
+                total_likes,
+                most_commented_ref,
+                most_liked_ref,
+            */
+            resp.json({total_refs, total_likes: likes[0].total_likes, most_liked_ref: liked_ref[0]})
     }else{
-        resp.status(204).json({error: "incorrect user id"})
+        resp.status(204).json({error: "unable to find user's data"})
     }
 
 })
@@ -132,4 +123,5 @@ usersRouter.put('/api/user/:username', async (req, resp) => {
     }
 
 })
+
 module.exports = usersRouter
