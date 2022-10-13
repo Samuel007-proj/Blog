@@ -51,4 +51,9 @@ comment_router.post('/api/comments', async (req, resp) => {
     
 })
 
+comment_router.get('/api/comments', async (req, resp) => {
+    const comments = await Comment.find({})
+    resp.json(comments)
+})
+
 module.exports = comment_router

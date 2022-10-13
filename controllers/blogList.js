@@ -74,8 +74,19 @@ bloglistRouter.delete('/api/blogs/:id', midware.userExtractor, async (req,resp) 
         return resp.status(401).json({error: `${req.user} did not create this note`})
     }
 
-    await Blog.findByIdAndRemove(blogId)
-    resp.status(204).send(`${req.username} deleted this note ${blogId}`)
+    const deletion = await Blog.findByIdAndRemove(blogId)
+
+    if(deletion){
+        const user = await User.findById(userId)
+        user_blog = await user.blogs.filter(id => id.toString() !== blogId.toString())
+        console.log(user_blog)
+        const update =  await User.findByIdAndUpdate(blogId, {blogs: user_blog}, {new: true})
+
+        resp.status(204).json(update)
+    }else{
+        resp.status(400)
+    }
+    
 })
 
 bloglistRouter.put('/api/blogs/:id', async (req,resp) => {

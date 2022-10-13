@@ -32,9 +32,5 @@ comment_schema.set('toJSON', {
     }
 })
 
-info('connecting to ' + url)
 
-const commentConn = mongoose.createConnection(url)
-commentConn.on('connected', ()=>info('connected to commentsDB') )
-
-module.exports = commentConn.model('Comment', comment_schema)
+module.exports = mongoose.model('Comment', comment_schema)

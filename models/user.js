@@ -28,7 +28,4 @@ userSchema.set('toJSON', {
 
 info('connecting to ' + url)
 
-const cnn = mongoose.createConnection(url)
-cnn.on('connected', ()=>info('connected to usersDB') )
-
-module.exports = cnn.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema)

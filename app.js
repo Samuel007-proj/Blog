@@ -13,7 +13,10 @@ const mongoose = require('mongoose')
 require('express-async-errors')
 info('connecting to: ', config.MONGODB_URI)
 
-mongoose.connect(config.MONGODB_URI)
+mongoose.connect(config.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology:true
+})
     .then(()=>{
         info('connected to BlogListApp')
     }).catch((err) => {

@@ -6,3 +6,11 @@ content-Type: application/json
     "name": "sammy",
     "password": "123456"
 }
+###
+POST https://blog-server-eta.vercel.app/login
+
+{
+    "username": "samuel",
+    "name": "sammy",
+    "password": "123456"
+}
